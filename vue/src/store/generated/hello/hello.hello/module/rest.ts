@@ -17,6 +17,10 @@ export interface HelloQueryParamsResponse {
   params?: HellohelloParams;
 }
 
+export interface HelloQuerySayHelloResponse {
+  name?: string;
+}
+
 /**
  * Params defines the parameters for the module.
  */
@@ -240,6 +244,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryParams = (params: RequestParams = {}) =>
     this.request<HelloQueryParamsResponse, RpcStatus>({
       path: `/hello/hello/params`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QuerySayHello
+   * @summary Queries a list of SayHello items.
+   * @request GET:/hello/hello/say_hello/{name}
+   */
+  querySayHello = (name: string, params: RequestParams = {}) =>
+    this.request<HelloQuerySayHelloResponse, RpcStatus>({
+      path: `/hello/hello/say_hello/${name}`,
       method: "GET",
       format: "json",
       ...params,
